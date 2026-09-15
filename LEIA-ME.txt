@@ -1,0 +1,24 @@
+TOCA DA ÁGUA - PRIMEIRA VERSÃO
+
+ESTRUTURA:
+
+toca-da-agua/
+├── index.html
+├── css/
+│   └── estilo.css
+├── js/
+│   ├── produtos.js
+│   └── script.js
+└── imagens/
+
+COMO EXECUTAR:
+1. Abra a pasta no VS Code.
+2. Instale a extensão "Live Server" no VS Code.
+3. Clique com o botão direito em index.html.
+4. Escolha "Open with Live Server".
+
+IMPORTANTE:
+- Os produtos e preços em js/produtos.js são exemplos e precisam ser substituídos pelos dados reais da Toca da Água.
+- O número do WhatsApp está configurado como (41) 99803-9906 nos arquivos index.html e js/script.js.
+- As imagens reais dos produtos ainda precisam ser colocadas na pasta imagens/.
+- Nesta primeira versão não há banco de dados, login ou pagamento online.

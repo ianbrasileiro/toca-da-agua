@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Toca da Água - Água, gás e produtos de conveniência em Curitiba. Faça seu pedido pelo WhatsApp.">
+    <meta name="robots" content="noindex">
+    <title>Toca da Água | Água, Gás e Conveniência</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <a class="logo" href="#inicio" aria-label="Toca da Água - início">
+            <span class="logo-toca">TOCA</span>
+            <span class="logo-da">DA</span>
+            <span class="logo-agua">ÁGUA</span>
+        </a>
+
+        <nav class="navegacao" aria-label="Navegação principal">
+            <a href="#inicio" class="ativo">Início</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#sobre">Sobre nós</a>
+            <a href="#como-funciona">Como funciona</a>
+            <a href="#contato">Contato</a>
+        </nav>
+
+        <div class="acoes-cabecalho">
+            <a class="botao-whatsapp" href="https://wa.me/5541998039906" target="_blank" rel="noopener">
+                WhatsApp
+            </a>
+            <button class="botao-carrinho" id="abrir-carrinho" aria-label="Abrir carrinho">
+                🛒 <span id="quantidade-carrinho">0</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="inicio">
+            <div class="hero-conteudo">
+                <span class="etiqueta">ÁGUA, GÁS E CONVENIÊNCIA</span>
+                <h1>Sua rotina <span>mais leve.</span></h1>
+                <p>Entregamos água mineral, gás e produtos de conveniência com praticidade, segurança e excelência no atendimento.</p>
+                <a href="#produtos" class="botao-principal">Fazer pedido</a>
+
+                <div class="beneficios">
+                    <div class="beneficio">
+                        <span>💧</span>
+                        <div><strong>Qualidade</strong><small>Produtos selecionados</small></div>
+                    </div>
+                    <div class="beneficio">
+                        <span>🚚</span>
+                        <div><strong>Entrega rápida</strong><small>Na sua casa ou empresa</small></div>
+                    </div>
+                    <div class="beneficio">
+                        <span>♡</span>
+                        <div><strong>Atendimento próximo</strong><small>Feito para você</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-produtos" aria-label="Produtos principais">
+                <div class="produto-hero agua-hero">
+                    <div class="simbolo-agua">💧</div>
+                    <span>Água</span>
+                    <strong>20L</strong>
+                </div>
+                <div class="produto-hero gas-hero grande">
+                    <span>P45</span>
+                </div>
+                <div class="produto-hero gas-hero pequeno">
+                    <span>P13</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="secao produtos-secao" id="produtos">
+            <div class="cabecalho-secao">
+                <div>
+                    <span class="etiqueta">NOSSOS PRODUTOS</span>
+                    <h2>Essenciais para o seu dia a dia.</h2>
+                </div>
+                <button class="filtro-ativo" data-categoria="todos">Todos os produtos</button>
+            </div>
+
+            <div class="categorias">
+                <button class="botao-categoria ativo" data-categoria="todos">Todos</button>
+                <button class="botao-categoria" data-categoria="agua">Água</button>
+                <button class="botao-categoria" data-categoria="gas">Gás</button>
+                <button class="botao-categoria" data-categoria="bebidas">Bebidas</button>
+                <button class="botao-categoria" data-categoria="conveniencia">Conveniência</button>
+            </div>
+
+            <div class="grade-produtos" id="lista-produtos"></div>
+        </section>
+
+        <section class="secao destaque-conveniencia">
+            <div>
+                <span class="etiqueta">PRODUTOS DE CONVENIÊNCIA</span>
+                <h2>Tudo o que você precisa, sem sair de casa.</h2>
+                <p>Além de água e gás, você também pode solicitar bebidas, snacks, produtos de limpeza e muito mais no mesmo pedido.</p>
+                <a href="#produtos" class="botao-principal">Ver produtos</a>
+            </div>
+            <div class="mini-produtos" aria-hidden="true">
+                <span>🥤</span><span>🍫</span><span>🧃</span><span>🧹</span><span>🍪</span>
+            </div>
+        </section>
+
+        <section class="secao como-funciona" id="como-funciona">
+            <div class="cabecalho-secao centralizado">
+                <span class="etiqueta">COMO FUNCIONA</span>
+                <h2>É rápido e simples.</h2>
+            </div>
+
+            <div class="passos">
+                <article class="passo">
+                    <span class="numero">1</span>
+                    <div class="icone-passo">🛒</div>
+                    <h3>Escolha seus produtos</h3>
+                    <p>Adicione tudo o que você precisa ao carrinho.</p>
+                </article>
+                <article class="passo">
+                    <span class="numero">2</span>
+                    <div class="icone-passo">📋</div>
+                    <h3>Confira seu pedido</h3>
+                    <p>Informe seus dados e confira os produtos escolhidos.</p>
+                </article>
+                <article class="passo">
+                    <span class="numero">3</span>
+                    <div class="icone-passo">💬</div>
+                    <h3>Envie pelo WhatsApp</h3>
+                    <p>O pedido é organizado automaticamente para você.</p>
+                </article>
+                <article class="passo">
+                    <span class="numero">4</span>
+                    <div class="icone-passo">🚚</div>
+                    <h3>Receba em casa</h3>
+                    <p>Nossa equipe confirma o pedido e combina a entrega.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="secao sobre" id="sobre">
+            <div class="sobre-imagem">
+                <div class="selo">9<br><small>ANOS</small></div>
+                <span>TOCA<br>DA ÁGUA</span>
+            </div>
+            <div class="sobre-conteudo">
+                <span class="etiqueta">SOBRE NÓS</span>
+                <h2>Há 9 anos fazendo parte da sua rotina.</h2>
+                <p>A Toca da Água está presente há 9 anos, superando desafios, crescendo e construindo sua história junto com seus clientes.</p>
+                <p>Nosso compromisso é oferecer produtos de qualidade, entrega prática e, principalmente, um atendimento próximo e excelente.</p>
+                <a href="#contato" class="botao-secundario">Fale com a gente</a>
+            </div>
+        </section>
+
+        <section class="faixa-contato" id="contato">
+            <div>
+                <span class="etiqueta">FALE COM A GENTE</span>
+                <h2>Seu pedido começa aqui.</h2>
+                <p>Monte seu carrinho e envie tudo pelo WhatsApp.</p>
+            </div>
+            <button class="botao-whatsapp grande-botao" id="pedir-pelo-whatsapp" type="button">💬 Pedir pelo WhatsApp</button>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="rodape-conteudo">
+            <div>
+                <div class="logo rodape-logo">
+                    <span class="logo-toca">TOCA</span><span class="logo-da">DA</span><span class="logo-agua">ÁGUA</span>
+                </div>
+                <p>Soluções em água, gás e conveniência para o seu dia.</p>
+            </div>
+            <div>
+                <h3>Navegação</h3>
+                <a href="#inicio">Início</a>
+                <a href="#produtos">Produtos</a>
+                <a href="#sobre">Sobre nós</a>
+            </div>
+            <div>
+                <h3>Atendimento</h3>
+                <p>📱 (41) 99803-9906</p>
+                <p>🕐 Todos os dias: 07h às 22h</p>
+                <p>📍 Curitiba - PR</p>
+            </div>
+        </div>
+        <div class="rodape-final">© 2026 Toca da Água. Todos os direitos reservados.</div>
+    </footer>
+
+    <div class="fundo-carrinho" id="fundo-carrinho">
+        <aside class="carrinho" aria-label="Carrinho de compras">
+            <div class="cabecalho-carrinho">
+                <div>
+                    <span class="etiqueta">SEU PEDIDO</span>
+                    <h2>Meu carrinho</h2>
+                </div>
+                <button id="fechar-carrinho" class="fechar-carrinho" aria-label="Fechar carrinho">×</button>
+            </div>
+
+            <div id="itens-carrinho" class="itens-carrinho">
+                <p class="carrinho-vazio">Seu carrinho está vazio.</p>
+            </div>
+
+            <div class="resumo-carrinho">
+                <div><span>Total dos produtos</span><strong id="total-carrinho">R$ 0,00</strong></div>
+                <button id="finalizar-pedido" class="botao-principal largura-total">Continuar pedido</button>
+            </div>
+        </aside>
+    </div>
+
+    <div class="fundo-checkout" id="fundo-checkout">
+        <section class="checkout">
+            <div class="cabecalho-carrinho">
+                <div>
+                    <span class="etiqueta">FINALIZAR PEDIDO</span>
+                    <h2>Dados para entrega</h2>
+                </div>
+                <button id="fechar-checkout" class="fechar-carrinho" aria-label="Fechar formulário">×</button>
+            </div>
+
+            <form id="formulario-pedido">
+                <label>Nome completo
+                    <input type="text" id="nome" required placeholder="Seu nome">
+                </label>
+                <label>Telefone
+                    <input type="tel" id="telefone" required placeholder="(41) 99999-9999">
+                </label>
+                <div class="duas-colunas">
+                    <label>Bairro
+                        <input type="text" id="bairro" required placeholder="Seu bairro">
+                    </label>
+                    <label>Número
+                        <input type="text" id="numero" required placeholder="123">
+                    </label>
+                </div>
+                <label>Endereço
+                    <input type="text" id="endereco" required placeholder="Rua, avenida...">
+                </label>
+                <label>Forma de pagamento
+                    <select id="pagamento" required>
+                        <option value="">Selecione</option>
+                        <option>Pix</option>
+                        <option>Dinheiro</option>
+                        <option>Cartão de débito</option>
+                        <option>Cartão de crédito</option>
+                    </select>
+                </label>
+                <label>Observações
+                    <textarea id="observacoes" rows="3" placeholder="Alguma informação para a entrega?"></textarea>
+                </label>
+
+                <div class="aviso-whatsapp">
+                    <strong>📱 Seu pedido será enviado pelo WhatsApp.</strong>
+                    <span>Você ainda poderá conferir a mensagem antes de enviá-la.</span>
+                </div>
+
+                <button type="submit" class="botao-principal largura-total">Enviar pedido pelo WhatsApp</button>
+            </form>
+        </section>
+    </div>
+
+    <script src="js/produtos.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
