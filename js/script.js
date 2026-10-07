@@ -24,22 +24,37 @@ function renderizarProdutos(categoria = "todos") {
         ? produtos
         : produtos.filter(produto => produto.categoria === categoria);
 
-    listaProdutos.innerHTML = produtosFiltrados.map(produto => `
+    const renderizarCartao = produto => `
         <article class="cartao-produto">
-            <div class="imagem-produto">
-                <span>${produto.simbolo}</span>
+            <div class="imagem-produto ${produto.imagem ? `tem-imagem ${produto.classeImagem || ""}` : ""}">
+                ${produto.imagem
+                    ? `<img src="${produto.imagem}" alt="${produto.nome}" loading="lazy">`
+                    : `<span aria-hidden="true">${produto.simbolo}</span>`}
             </div>
             <div class="informacoes-produto">
                 <span class="categoria-produto">${produto.categoria}</span>
                 <h3>${produto.nome}</h3>
-                <p>${produto.descricao}</p>
                 <div class="rodape-produto">
                     <strong>${formatarPreco(produto.preco)}</strong>
                     <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar</button>
                 </div>
             </div>
         </article>
-    `).join("");
+    `;
+
+    if (categoria === "alcoolicas") {
+        const ehVinho = produto => /^Vinho\b/i.test(produto.nome) || /Espumante/i.test(produto.nome);
+        const outrasBebidas = produtosFiltrados.filter(produto => !ehVinho(produto));
+        const vinhos = produtosFiltrados.filter(ehVinho);
+
+        listaProdutos.innerHTML = [
+            ...outrasBebidas.map(renderizarCartao),
+            ...(vinhos.length ? ['<div class="separador-vinhos"><span>Vinhos</span></div>', ...vinhos.map(renderizarCartao)] : [])
+        ].join("");
+        return;
+    }
+
+    listaProdutos.innerHTML = produtosFiltrados.map(renderizarCartao).join("");
 }
 
 function adicionarAoCarrinho(id) {
@@ -99,7 +114,9 @@ function atualizarCarrinho() {
     itensCarrinho.innerHTML = carrinho.map(produto => `
         <div class="item-carrinho">
             <div class="item-carrinho-info">
-                <span>${produto.simbolo}</span>
+                <span class="miniatura-carrinho ${produto.imagem ? `tem-imagem ${produto.classeImagem || ""}` : ""}">
+                    ${produto.imagem ? `<img src="${produto.imagem}" alt="">` : produto.simbolo}
+                </span>
                 <div>
                     <strong>${produto.nome}</strong>
                     <small>${formatarPreco(produto.preco)} cada</small>
@@ -162,27 +179,32 @@ function gerarMensagemWhatsApp(dados) {
     return mensagem;
 }
 
-document.querySelectorAll(".botao-categoria").forEach(botao => {
+document.querySelectorAll(".botao-categoria, .opcao-produto").forEach(botao => {
     botao.addEventListener("click", () => {
         document.querySelectorAll(".botao-categoria").forEach(item => item.classList.remove("ativo"));
-        botao.classList.add("ativo");
+        if (botao.classList.contains("botao-categoria")) {
+            botao.classList.add("ativo");
+        } else {
+            document.querySelector(`.botao-categoria[data-categoria="${botao.dataset.categoria}"]`)?.classList.add("ativo");
+            document.getElementById("menu-categorias").hidden = true;
+            document.getElementById("toggle-menu-produtos").setAttribute("aria-expanded", "false");
+            document.getElementById("produtos").scrollIntoView({ behavior: "smooth" });
+        }
         renderizarProdutos(botao.dataset.categoria);
     });
+});
+
+document.getElementById("toggle-menu-produtos").addEventListener("click", event => {
+    const menu = document.getElementById("menu-categorias");
+    const aberto = event.currentTarget.getAttribute("aria-expanded") === "true";
+    event.currentTarget.setAttribute("aria-expanded", String(!aberto));
+    menu.hidden = aberto;
 });
 
 document.getElementById("abrir-carrinho").addEventListener("click", abrirCarrinho);
 document.getElementById("fechar-carrinho").addEventListener("click", fecharCarrinho);
 document.getElementById("finalizar-pedido").addEventListener("click", abrirCheckout);
 document.getElementById("fechar-checkout").addEventListener("click", fecharCheckout);
-document.getElementById("pedir-pelo-whatsapp").addEventListener("click", () => {
-    if (carrinho.length === 0) {
-        document.getElementById("produtos").scrollIntoView({ behavior: "smooth" });
-        alert("Escolha os produtos antes de enviar o pedido pelo WhatsApp.");
-        return;
-    }
-
-    abrirCheckout();
-});
 
 fundoCarrinho.addEventListener("click", event => {
     if (event.target === fundoCarrinho) fecharCarrinho();
@@ -195,12 +217,6 @@ fundoCheckout.addEventListener("click", event => {
 document.getElementById("formulario-pedido").addEventListener("submit", event => {
     event.preventDefault();
 
-    if (carrinho.length === 0) {
-        alert("O carrinho está vazio. Adicione pelo menos um produto.");
-        fecharCheckout();
-        return;
-    }
-
     const dados = {
         nome: document.getElementById("nome").value.trim(),
         telefone: document.getElementById("telefone").value.trim(),
@@ -212,13 +228,9 @@ document.getElementById("formulario-pedido").addEventListener("submit", event =>
     };
 
     const mensagem = gerarMensagemWhatsApp(dados);
-    const parametros = new URLSearchParams({
-        phone: numeroWhatsApp,
-        text: mensagem
-    });
-    const url = `https://api.whatsapp.com/send?${parametros.toString()}`;
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensagem)}`;
 
-    window.location.assign(url);
+    window.open(url, "_blank");
 });
 
 renderizarProdutos();

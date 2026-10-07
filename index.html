@@ -4,24 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Toca da Água - Água, gás e produtos de conveniência em Curitiba. Faça seu pedido pelo WhatsApp.">
-    <meta name="robots" content="noindex">
     <title>Toca da Água | Água, Gás e Conveniência</title>
     <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
     <header class="cabecalho">
         <a class="logo" href="#inicio" aria-label="Toca da Água - início">
-            <span class="logo-toca">TOCA</span>
-            <span class="logo-da">DA</span>
-            <span class="logo-agua">ÁGUA</span>
+            <img src="imagens/logo-toca-da-agua.png" alt="Toca da Água">
         </a>
 
         <nav class="navegacao" aria-label="Navegação principal">
             <a href="#inicio" class="ativo">Início</a>
-            <a href="#produtos">Produtos</a>
             <a href="#sobre">Sobre nós</a>
             <a href="#como-funciona">Como funciona</a>
             <a href="#contato">Contato</a>
+            <div class="menu-produtos">
+                <button class="nav-produtos" id="toggle-menu-produtos" type="button" aria-expanded="false" aria-controls="menu-categorias">
+                    Produtos <span class="indicador-menu" aria-hidden="true"></span>
+                </button>
+                <div class="submenu-produtos" id="menu-categorias" hidden>
+                    <button class="opcao-produto" type="button" data-categoria="todos">Todos</button>
+                    <button class="opcao-produto" type="button" data-categoria="agua">Água</button>
+                    <button class="opcao-produto" type="button" data-categoria="gas">Gás</button>
+                    <button class="opcao-produto" type="button" data-categoria="bebidas">Bebidas</button>
+                    <button class="opcao-produto" type="button" data-categoria="alcoolicas">Bebidas Alcoólicas</button>
+                    <button class="opcao-produto" type="button" data-categoria="conveniencia">Conveniência</button>
+                </div>
+            </div>
         </nav>
 
         <div class="acoes-cabecalho">
@@ -60,15 +69,16 @@
 
             <div class="hero-produtos" aria-label="Produtos principais">
                 <div class="produto-hero agua-hero">
-                    <div class="simbolo-agua">💧</div>
-                    <span>Água</span>
-                    <strong>20L</strong>
+                    <img src="imagens/galao-agua-recorte.png" alt="Galão de água mineral">
+                    <span class="sr-only">Galão de água</span>
                 </div>
                 <div class="produto-hero gas-hero grande">
-                    <span>P45</span>
+                    <img src="imagens/gas-p45-recorte.png" alt="Botijão de gás P45">
+                    <span class="sr-only">Botijão de gás P45</span>
                 </div>
                 <div class="produto-hero gas-hero pequeno">
-                    <span>P13</span>
+                    <img src="imagens/gas-p13-recorte.png" alt="Botijão de gás P13">
+                    <span class="sr-only">Botijão de gás P13</span>
                 </div>
             </div>
         </section>
@@ -83,11 +93,12 @@
             </div>
 
             <div class="categorias">
-                <button class="botao-categoria ativo" data-categoria="todos">Todos</button>
-                <button class="botao-categoria" data-categoria="agua">Água</button>
-                <button class="botao-categoria" data-categoria="gas">Gás</button>
-                <button class="botao-categoria" data-categoria="bebidas">Bebidas</button>
-                <button class="botao-categoria" data-categoria="conveniencia">Conveniência</button>
+            <button class="botao-categoria ativo" data-categoria="todos">Todos</button>
+            <button class="botao-categoria" data-categoria="agua">Água</button>
+            <button class="botao-categoria" data-categoria="gas">Gás</button>
+            <button class="botao-categoria" data-categoria="bebidas">Bebidas</button>
+            <button class="botao-categoria" data-categoria="alcoolicas">Bebidas Alcoólicas</button>
+            <button class="botao-categoria" data-categoria="conveniencia">Conveniência</button>
             </div>
 
             <div class="grade-produtos" id="lista-produtos"></div>
@@ -142,7 +153,7 @@
         <section class="secao sobre" id="sobre">
             <div class="sobre-imagem">
                 <div class="selo">9<br><small>ANOS</small></div>
-                <span>TOCA<br>DA ÁGUA</span>
+                <img src="imagens/selo-toca-da-agua.png" alt="Símbolo da Toca da Água">
             </div>
             <div class="sobre-conteudo">
                 <span class="etiqueta">SOBRE NÓS</span>
@@ -159,16 +170,16 @@
                 <h2>Seu pedido começa aqui.</h2>
                 <p>Monte seu carrinho e envie tudo pelo WhatsApp.</p>
             </div>
-            <button class="botao-whatsapp grande-botao" id="pedir-pelo-whatsapp" type="button">💬 Pedir pelo WhatsApp</button>
+            <a class="botao-whatsapp grande-botao" href="https://wa.me/5541998039906" target="_blank" rel="noopener">💬 Pedir pelo WhatsApp</a>
         </section>
     </main>
 
     <footer class="rodape">
         <div class="rodape-conteudo">
             <div>
-                <div class="logo rodape-logo">
-                    <span class="logo-toca">TOCA</span><span class="logo-da">DA</span><span class="logo-agua">ÁGUA</span>
-                </div>
+                <a class="logo rodape-logo" href="#inicio" aria-label="Voltar ao início">
+                    <img src="imagens/logo-toca-da-agua.png" alt="Toca da Água">
+                </a>
                 <p>Soluções em água, gás e conveniência para o seu dia.</p>
             </div>
             <div>
