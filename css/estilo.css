@@ -70,29 +70,27 @@ a {
 }
 
 .logo {
-    position: relative;
-    display: inline-grid;
-    grid-template-columns: auto auto;
-    grid-template-rows: 1fr 1fr;
-    width: 125px;
-    font-weight: 700;
-    letter-spacing: -1px;
-    line-height: .85;
+    display: inline-flex;
+    width: 126px;
+    flex: 0 0 auto;
 }
 
-.logo-toca {
-    grid-column: 1 / 3;
-    font-size: 26px;
+.logo img {
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
-.logo-da {
-    font-size: 14px;
-    align-self: end;
-}
-
-.logo-agua {
-    font-size: 24px;
-    color: var(--cor-texto);
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .navegacao {
@@ -113,6 +111,75 @@ a {
 .navegacao a.ativo {
     color: var(--cor-principal-escura);
     border-color: var(--cor-principal);
+}
+
+.menu-produtos {
+    position: relative;
+}
+
+.nav-produtos {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 29px 0 25px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: transparent;
+    color: #3f4545;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-produtos:hover,
+.nav-produtos[aria-expanded="true"] {
+    color: var(--cor-principal-escura);
+    border-color: var(--cor-principal);
+}
+
+.indicador-menu {
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform .2s;
+}
+
+.nav-produtos[aria-expanded="true"] .indicador-menu {
+    transform: translateY(2px) rotate(225deg);
+}
+
+.submenu-produtos {
+    position: absolute;
+    z-index: 25;
+    top: calc(100% - 1px);
+    left: -12px;
+    display: grid;
+    min-width: 190px;
+    padding: 7px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: white;
+    box-shadow: var(--sombra);
+}
+
+.submenu-produtos[hidden] {
+    display: none;
+}
+
+.opcao-produto {
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #3f4545;
+    font-size: 13px;
+    text-align: left;
+}
+
+.opcao-produto:hover {
+    background: var(--cor-clara);
+    color: var(--cor-principal-escura);
 }
 
 .acoes-cabecalho {
@@ -289,72 +356,42 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-weight: 700;
-    text-shadow: 0 1px 2px rgba(0,0,0,.3);
-    box-shadow: 0 18px 30px rgba(0,0,0,.15);
+    box-shadow: none;
+    filter: drop-shadow(0 18px 18px rgba(10, 40, 45, .18));
 }
 
 .agua-hero {
-    width: 230px;
-    height: 355px;
-    border-radius: 45% 45% 18% 18%;
-    background: linear-gradient(90deg, #0b82c6, #66c9f4 45%, #0a79ba);
-    flex-direction: column;
-    border: 5px solid rgba(255,255,255,.28);
+    width: 250px;
+    height: 365px;
 }
 
-.agua-hero::before {
-    content: "";
-    position: absolute;
-    top: -40px;
-    width: 70px;
-    height: 50px;
-    border-radius: 8px 8px 0 0;
-    background: #151b1e;
+.produto-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
-.agua-hero .simbolo-agua {
-    font-size: 34px;
+.agua-hero img {
+    transform: scale(1.75);
 }
 
-.agua-hero span {
-    font-size: 19px;
+.gas-hero.grande img {
+    transform: scale(2);
 }
 
-.agua-hero strong {
-    font-size: 35px;
-}
-
-.gas-hero {
-    background: linear-gradient(90deg, #696d6c, #bfc0bd 48%, #666968);
-    border-radius: 28px 28px 16px 16px;
-    color: #111;
-    text-shadow: none;
-}
-
-.gas-hero::before {
-    content: "";
-    position: absolute;
-    top: -18px;
-    width: 75px;
-    height: 24px;
-    background: #8b8e8c;
-    border-radius: 8px 8px 0 0;
+.gas-hero.pequeno img {
+    transform: scale(1.35);
 }
 
 .gas-hero.grande {
-    width: 175px;
-    height: 330px;
+    width: 210px;
+    height: 360px;
 }
 
 .gas-hero.pequeno {
-    width: 125px;
-    height: 245px;
-}
-
-.gas-hero span {
-    font-size: 24px;
+    width: 165px;
+    height: 285px;
 }
 
 .secao {
@@ -414,6 +451,25 @@ a {
     gap: 18px;
 }
 
+.separador-vinhos {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 12px 0 2px;
+    color: var(--cor-principal-escura);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.separador-vinhos::before,
+.separador-vinhos::after {
+    content: "";
+    flex: 1;
+    border-top: 1px solid var(--cor-borda);
+}
+
 .cartao-produto {
     border: 1px solid var(--cor-borda);
     border-radius: var(--raio);
@@ -428,16 +484,43 @@ a {
 }
 
 .imagem-produto {
-    height: 205px;
+    height: 235px;
     display: grid;
     place-items: center;
     background: linear-gradient(145deg, #f1f5f5, #e8f4f3);
+    overflow: hidden;
 }
 
 .imagem-produto span {
     font-size: 70px;
     color: #777;
     font-weight: 700;
+}
+
+.imagem-produto.tem-imagem {
+    padding: 20px 28px;
+    background: linear-gradient(145deg, #f8fbfb, #edf6f5);
+}
+
+.imagem-produto img {
+    display: block;
+    width: auto !important;
+    height: 175px !important;
+    max-width: 82% !important;
+    max-height: 175px !important;
+    object-fit: contain;
+    transform: none !important;
+    filter: drop-shadow(0 12px 14px rgba(20, 60, 60, .14));
+}
+
+.imagem-produto.produto-p13 img {
+    height: 165px !important;
+    max-height: 165px !important;
+}
+
+.imagem-produto.produto-p45 img {
+    height: 185px !important;
+    max-height: 185px !important;
 }
 
 .informacoes-produto {
@@ -580,6 +663,13 @@ a {
     text-align: center;
     font-weight: 700;
     color: #187d7e;
+}
+
+.sobre-imagem > img {
+    width: min(285px, 72%);
+    height: auto;
+    border-radius: 50%;
+    filter: drop-shadow(0 18px 28px rgba(10, 80, 82, .18));
 }
 
 .selo {
@@ -786,6 +876,14 @@ a {
     display: grid;
     place-items: center;
     background: var(--cor-clara);
+    overflow: hidden;
+}
+
+.miniatura-carrinho img {
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+    object-fit: contain;
 }
 
 .item-carrinho-info strong,
@@ -907,6 +1005,7 @@ a {
     .hero-produtos {
         height: 360px;
         margin-top: 20px;
+        transform: scale(.82);
     }
 
     .grade-produtos {
@@ -928,13 +1027,18 @@ a {
     .navegacao {
         order: 3;
         width: 100%;
-        overflow-x: auto;
+        flex-wrap: wrap;
         justify-content: flex-start;
         gap: 22px;
     }
 
     .navegacao a {
         white-space: nowrap;
+        padding: 4px 0 8px;
+        font-size: 12px;
+    }
+
+    .nav-produtos {
         padding: 4px 0 8px;
         font-size: 12px;
     }
@@ -952,7 +1056,7 @@ a {
     }
 
     .hero-produtos {
-        transform: scale(.82);
+        transform: scale(.72);
         margin: -30px -30px;
     }
 
@@ -1026,14 +1130,6 @@ a {
         width: 100px;
     }
 
-    .logo-toca {
-        font-size: 21px;
-    }
-
-    .logo-agua {
-        font-size: 20px;
-    }
-
     .hero h1 {
         font-size: 38px;
     }
@@ -1045,7 +1141,7 @@ a {
     }
 
     .hero-produtos {
-        transform: scale(.65);
+        transform: scale(.58);
         margin: -70px -80px;
     }
 
