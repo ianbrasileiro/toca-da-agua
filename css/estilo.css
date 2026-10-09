@@ -182,6 +182,82 @@ a {
     color: var(--cor-principal-escura);
 }
 
+.grupo-opcao-produto {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 30px;
+    align-items: center;
+}
+
+.opcao-produto {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.botao-seta-submenu {
+    display: grid;
+    width: 30px;
+    height: 34px;
+    flex: 0 0 30px;
+    place-items: center;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #3f4545;
+}
+
+.botao-seta-submenu:hover,
+.botao-seta-submenu[aria-expanded="true"] {
+    background: var(--cor-clara);
+    color: var(--cor-principal-escura);
+}
+
+.indicador-submenu {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(-45deg);
+    transition: transform .2s;
+}
+
+.opcao-produto[aria-expanded="true"] .indicador-submenu {
+    transform: rotate(45deg);
+}
+
+.botao-seta-submenu[aria-expanded="true"] .indicador-submenu {
+    transform: rotate(45deg);
+}
+
+.submenu-alcoolicas {
+    display: grid;
+    grid-column: 1 / -1;
+    margin: 0 4px 4px 10px;
+    padding-left: 7px;
+    border-left: 1px solid var(--cor-borda);
+}
+
+.submenu-alcoolicas[hidden] {
+    display: none;
+}
+
+.opcao-subcategoria {
+    padding: 7px 9px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #505858;
+    font-size: 12px;
+    text-align: left;
+}
+
+.opcao-subcategoria:hover {
+    background: var(--cor-clara);
+    color: var(--cor-principal-escura);
+}
+
 .acoes-cabecalho {
     display: flex;
     align-items: center;
@@ -445,13 +521,50 @@ a {
     border-color: var(--cor-principal);
 }
 
+.filtros-alcoolicos {
+    display: grid;
+    gap: 10px;
+    margin: -12px 0 30px;
+}
+
+.filtros-alcoolicos[hidden] {
+    display: none;
+}
+
+.rotulo-filtros-alcoolicos {
+    color: var(--cor-principal-escura);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.opcoes-filtros-alcoolicos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.botao-subfiltro {
+    padding: 8px 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    background: white;
+    color: #505858;
+}
+
+.botao-subfiltro.ativo,
+.botao-subfiltro:hover {
+    border-color: var(--cor-principal);
+    background: var(--cor-principal);
+    color: white;
+}
+
 .grade-produtos {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
 }
 
-.separador-vinhos {
+.separador-produtos {
     grid-column: 1 / -1;
     display: flex;
     align-items: center;
@@ -463,8 +576,8 @@ a {
     text-transform: uppercase;
 }
 
-.separador-vinhos::before,
-.separador-vinhos::after {
+.separador-produtos::before,
+.separador-produtos::after {
     content: "";
     flex: 1;
     border-top: 1px solid var(--cor-borda);
@@ -1022,6 +1135,7 @@ a {
         padding: 12px 5%;
         min-height: 70px;
         flex-wrap: wrap;
+        gap: 8px 16px;
     }
 
     .navegacao {
@@ -1029,17 +1143,21 @@ a {
         width: 100%;
         flex-wrap: wrap;
         justify-content: flex-start;
-        gap: 22px;
+        gap: 4px 18px;
     }
 
     .navegacao a {
         white-space: nowrap;
-        padding: 4px 0 8px;
+        min-height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 4px 0;
         font-size: 12px;
     }
 
     .nav-produtos {
-        padding: 4px 0 8px;
+        min-height: 40px;
+        padding: 4px 0;
         font-size: 12px;
     }
 
@@ -1048,20 +1166,68 @@ a {
     }
 
     .hero {
-        padding: 45px 5%;
+        min-height: 0;
+        padding: 38px 5% 28px;
     }
 
     .hero h1 {
-        font-size: 45px;
+        font-size: clamp(36px, 10vw, 45px);
+        letter-spacing: -1.5px;
+    }
+
+    .hero h1 span {
+        display: block;
+    }
+
+    .hero p {
+        max-width: 520px;
+        font-size: 15px;
     }
 
     .hero-produtos {
-        transform: scale(.72);
-        margin: -30px -30px;
+        height: 230px;
+        gap: 0;
+        margin: 16px 0 0;
+        padding: 0;
+        transform: none;
+    }
+
+    .hero-produtos::before {
+        width: 100%;
+        height: 150px;
+        right: 0;
+        bottom: 25px;
+    }
+
+    .agua-hero {
+        width: 34%;
+        height: 190px;
+    }
+
+    .gas-hero.grande {
+        width: 31%;
+        height: 205px;
+    }
+
+    .gas-hero.pequeno {
+        width: 25%;
+        height: 160px;
+    }
+
+    .agua-hero img {
+        transform: scale(1.2);
+    }
+
+    .gas-hero.grande img {
+        transform: scale(1.25);
+    }
+
+    .gas-hero.pequeno img {
+        transform: scale(1.1);
     }
 
     .secao {
-        padding: 60px 5%;
+        padding: 48px 5%;
     }
 
     .cabecalho-secao {
@@ -1074,6 +1240,26 @@ a {
 
     .grade-produtos {
         grid-template-columns: 1fr;
+    }
+
+    .imagem-produto {
+        height: 200px;
+    }
+
+    .informacoes-produto {
+        padding: 16px;
+    }
+
+    .rodape-produto button {
+        min-width: 88px;
+        min-height: 44px;
+        border-radius: 999px;
+        background: var(--cor-clara);
+    }
+
+    .botao-categoria,
+    .botao-subfiltro {
+        min-height: 42px;
     }
 
     .destaque-conveniencia {
@@ -1141,8 +1327,19 @@ a {
     }
 
     .hero-produtos {
-        transform: scale(.58);
-        margin: -70px -80px;
+        height: 190px;
+    }
+
+    .agua-hero {
+        height: 160px;
+    }
+
+    .gas-hero.grande {
+        height: 175px;
+    }
+
+    .gas-hero.pequeno {
+        height: 135px;
     }
 
     .checkout {

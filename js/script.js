@@ -19,10 +19,27 @@ function salvarCarrinho() {
     localStorage.setItem("carrinhoTocaDaAgua", JSON.stringify(carrinho));
 }
 
-function renderizarProdutos(categoria = "todos") {
+function tipoBebidaAlcoolica(produto) {
+    if (/^Vinho\b|Espumante|Don Luis|Jurupinga/i.test(produto.nome)) return "vinhos";
+    if (/cerveja|smirnoff ice|skol beats/i.test(produto.nome)) return "fermentados";
+    if (/whisky|whiskey|bourbon|\bgin\b|vodka|cachaça|licor|jack daniels|fireball|campari|j[äa]germeister|brasilberg|daga|motor rocks|cynar|presidente|busca brisa|dierva|quentão/i.test(produto.nome)) return "destilados";
+    return "outros";
+}
+
+function renderizarProdutos(categoria = "todos", subcategoria = "todos") {
     const produtosFiltrados = categoria === "todos"
         ? produtos
         : produtos.filter(produto => produto.categoria === categoria);
+    const produtosExibidos = categoria === "alcoolicas" && subcategoria !== "todos"
+        ? produtosFiltrados.filter(produto => tipoBebidaAlcoolica(produto) === subcategoria)
+        : produtosFiltrados;
+    const filtrosAlcoolicos = document.getElementById("filtros-alcoolicos");
+    filtrosAlcoolicos.hidden = categoria !== "alcoolicas";
+    filtrosAlcoolicos.querySelectorAll(".botao-subfiltro").forEach(botao => {
+        const selecionado = botao.dataset.subcategoria === subcategoria;
+        botao.classList.toggle("ativo", selecionado);
+        botao.setAttribute("aria-pressed", String(selecionado));
+    });
 
     const renderizarCartao = produto => `
         <article class="cartao-produto">
@@ -43,18 +60,34 @@ function renderizarProdutos(categoria = "todos") {
     `;
 
     if (categoria === "alcoolicas") {
-        const ehVinho = produto => /^Vinho\b/i.test(produto.nome) || /Espumante/i.test(produto.nome);
-        const outrasBebidas = produtosFiltrados.filter(produto => !ehVinho(produto));
-        const vinhos = produtosFiltrados.filter(ehVinho);
+        if (subcategoria !== "todos") {
+            const nomesSubcategorias = {
+                destilados: "Destilados",
+                fermentados: "Fermentados",
+                vinhos: "Vinhos"
+            };
+            listaProdutos.innerHTML = [
+                `<div class="separador-produtos"><span>${nomesSubcategorias[subcategoria]}</span></div>`,
+                ...produtosExibidos.map(renderizarCartao)
+            ].join("");
+            return;
+        }
+
+        const outrasBebidas = produtosExibidos.filter(produto => tipoBebidaAlcoolica(produto) === "outros");
+        const destilados = produtosExibidos.filter(produto => tipoBebidaAlcoolica(produto) === "destilados");
+        const fermentados = produtosExibidos.filter(produto => tipoBebidaAlcoolica(produto) === "fermentados");
+        const vinhos = produtosExibidos.filter(produto => tipoBebidaAlcoolica(produto) === "vinhos");
 
         listaProdutos.innerHTML = [
             ...outrasBebidas.map(renderizarCartao),
-            ...(vinhos.length ? ['<div class="separador-vinhos"><span>Vinhos</span></div>', ...vinhos.map(renderizarCartao)] : [])
+            ...(destilados.length ? ['<div class="separador-produtos"><span>Destilados</span></div>', ...destilados.map(renderizarCartao)] : []),
+            ...(fermentados.length ? ['<div class="separador-produtos"><span>Fermentados</span></div>', ...fermentados.map(renderizarCartao)] : []),
+            ...(vinhos.length ? ['<div class="separador-produtos"><span>Vinhos</span></div>', ...vinhos.map(renderizarCartao)] : [])
         ].join("");
         return;
     }
 
-    listaProdutos.innerHTML = produtosFiltrados.map(renderizarCartao).join("");
+    listaProdutos.innerHTML = produtosExibidos.map(renderizarCartao).join("");
 }
 
 function adicionarAoCarrinho(id) {
@@ -179,19 +212,61 @@ function gerarMensagemWhatsApp(dados) {
     return mensagem;
 }
 
-document.querySelectorAll(".botao-categoria, .opcao-produto").forEach(botao => {
+document.querySelectorAll(".botao-categoria").forEach(botao => {
     botao.addEventListener("click", () => {
         document.querySelectorAll(".botao-categoria").forEach(item => item.classList.remove("ativo"));
-        if (botao.classList.contains("botao-categoria")) {
-            botao.classList.add("ativo");
-        } else {
-            document.querySelector(`.botao-categoria[data-categoria="${botao.dataset.categoria}"]`)?.classList.add("ativo");
-            document.getElementById("menu-categorias").hidden = true;
-            document.getElementById("toggle-menu-produtos").setAttribute("aria-expanded", "false");
-            document.getElementById("produtos").scrollIntoView({ behavior: "smooth" });
-        }
+        botao.classList.add("ativo");
         renderizarProdutos(botao.dataset.categoria);
     });
+});
+
+document.querySelectorAll(".botao-subfiltro").forEach(botao => {
+    botao.addEventListener("click", () => {
+        renderizarProdutos("alcoolicas", botao.dataset.subcategoria);
+    });
+});
+
+document.getElementById("menu-categorias").addEventListener("click", event => {
+    const subcategoria = event.target.closest(".opcao-subcategoria");
+    const botaoSeta = event.target.closest("#toggle-submenu-alcoolicas");
+    const botaoCategoria = event.target.closest(".opcao-produto");
+    const menu = document.getElementById("menu-categorias");
+    const categoriaAlcoolicas = document.getElementById("toggle-submenu-alcoolicas");
+
+    if (botaoSeta) {
+        const submenu = document.getElementById("submenu-alcoolicas");
+        const aberto = botaoSeta.getAttribute("aria-expanded") === "true";
+        botaoSeta.setAttribute("aria-expanded", String(!aberto));
+        botaoSeta.setAttribute("aria-label", `${aberto ? "Mostrar" : "Ocultar"} opções de bebidas alcoólicas`);
+        submenu.hidden = aberto;
+        return;
+    }
+
+    if (subcategoria) {
+        document.querySelectorAll(".botao-categoria").forEach(item => item.classList.remove("ativo"));
+        document.querySelector('.botao-categoria[data-categoria="alcoolicas"]')?.classList.add("ativo");
+        renderizarProdutos("alcoolicas", subcategoria.dataset.subcategoria);
+        menu.hidden = true;
+        document.getElementById("toggle-menu-produtos").setAttribute("aria-expanded", "false");
+        categoriaAlcoolicas.setAttribute("aria-expanded", "false");
+        categoriaAlcoolicas.setAttribute("aria-label", "Mostrar opções de bebidas alcoólicas");
+        document.getElementById("submenu-alcoolicas").hidden = true;
+        document.getElementById("produtos").scrollIntoView({ behavior: "smooth" });
+        return;
+    }
+
+    if (!botaoCategoria) return;
+
+    document.querySelectorAll(".botao-categoria").forEach(item => item.classList.remove("ativo"));
+    document.querySelector(`.botao-categoria[data-categoria="${botaoCategoria.dataset.categoria}"]`)?.classList.add("ativo");
+    renderizarProdutos(botaoCategoria.dataset.categoria);
+
+    menu.hidden = true;
+    document.getElementById("toggle-menu-produtos").setAttribute("aria-expanded", "false");
+    categoriaAlcoolicas.setAttribute("aria-expanded", "false");
+    categoriaAlcoolicas.setAttribute("aria-label", "Mostrar opções de bebidas alcoólicas");
+    document.getElementById("submenu-alcoolicas").hidden = true;
+    document.getElementById("produtos").scrollIntoView({ behavior: "smooth" });
 });
 
 document.getElementById("toggle-menu-produtos").addEventListener("click", event => {
