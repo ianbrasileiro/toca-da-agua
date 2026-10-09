@@ -27,7 +27,19 @@
                     <button class="opcao-produto" type="button" data-categoria="agua">Água</button>
                     <button class="opcao-produto" type="button" data-categoria="gas">Gás</button>
                     <button class="opcao-produto" type="button" data-categoria="bebidas">Bebidas</button>
-                    <button class="opcao-produto" type="button" data-categoria="alcoolicas">Bebidas Alcoólicas</button>
+                    <div class="grupo-opcao-produto">
+                        <button class="opcao-produto" type="button" data-categoria="alcoolicas">
+                            Bebidas Alcoólicas
+                        </button>
+                        <button class="botao-seta-submenu" id="toggle-submenu-alcoolicas" type="button" aria-label="Mostrar opções de bebidas alcoólicas" aria-expanded="false" aria-controls="submenu-alcoolicas">
+                            <span class="indicador-submenu" aria-hidden="true"></span>
+                        </button>
+                        <div class="submenu-alcoolicas" id="submenu-alcoolicas" hidden>
+                            <button class="opcao-subcategoria" type="button" data-subcategoria="destilados">Destilados</button>
+                            <button class="opcao-subcategoria" type="button" data-subcategoria="fermentados">Fermentados</button>
+                            <button class="opcao-subcategoria" type="button" data-subcategoria="vinhos">Vinhos</button>
+                        </div>
+                    </div>
                     <button class="opcao-produto" type="button" data-categoria="conveniencia">Conveniência</button>
                 </div>
             </div>
@@ -99,6 +111,16 @@
             <button class="botao-categoria" data-categoria="bebidas">Bebidas</button>
             <button class="botao-categoria" data-categoria="alcoolicas">Bebidas Alcoólicas</button>
             <button class="botao-categoria" data-categoria="conveniencia">Conveniência</button>
+            </div>
+
+            <div class="filtros-alcoolicos" id="filtros-alcoolicos" hidden>
+                <span class="rotulo-filtros-alcoolicos">Adicionar filtros</span>
+                <div class="opcoes-filtros-alcoolicos" aria-label="Filtrar bebidas alcoólicas">
+                    <button class="botao-subfiltro ativo" type="button" data-subcategoria="todos" aria-pressed="true">Todos</button>
+                    <button class="botao-subfiltro" type="button" data-subcategoria="destilados" aria-pressed="false">Destilados</button>
+                    <button class="botao-subfiltro" type="button" data-subcategoria="fermentados" aria-pressed="false">Fermentados</button>
+                    <button class="botao-subfiltro" type="button" data-subcategoria="vinhos" aria-pressed="false">Vinhos</button>
+                </div>
             </div>
 
             <div class="grade-produtos" id="lista-produtos"></div>

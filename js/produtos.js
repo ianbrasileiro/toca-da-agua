@@ -50,14 +50,6 @@ const produtos = [
         simbolo: "🌽",
         imagem: "imagens/doritos.png",
     },
-    {
-        id: 8,
-        nome: "Detergente",
-        categoria: "conveniencia",
-        preco: 4.50,
-        imagem: "imagens/detergente.png",
-        simbolo: "🧹"
-    },
     // --- BEBIDAS ALCOÓLICAS EXISTENTES ATUALIZADAS ---
     {
         id: 9,
